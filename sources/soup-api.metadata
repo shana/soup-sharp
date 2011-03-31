@@ -5,5 +5,9 @@
 	<attr path="/api/namespace/object[@name='Message']/property[@name='RequestHeaders']" name="type">gpointer</attr>
 	<attr path="/api/namespace/object[@name='Message']/property[@name='ResponseHeaders']" name="type">gpointer</attr>
 	<attr path="/api/namespace/object[@name='Session']/property[@name='ProxyUri']" name="type">gpointer</attr>
+	<remove-node path="/api/namespace/object[@name='AuthDomain']/property[@name='AuthDomainFilter']" />
+	<remove-node path="/api/namespace/object[@name='AuthDomain']/method[@name='SetFilter']" />
+	<remove-node path="/api/namespace/object[@name='AuthDomain']/method[@name='SetGenericAuthCallback']" />
+	<remove-node path="/api/namespace/object[@name='Globals']/method[@name='XmlrpcExtractMethodResponse']" />
 </metadata>
 

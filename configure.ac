@@ -162,6 +162,8 @@ AC_CONFIG_FILES([
 	sources/AssemblyInfo.cs
 	sources/soup-sharp.pc
 	sources/soup-sharp.dll.config
+	samples/Makefile
+	samples/simple/Makefile
 ])
 AC_CONFIG_COMMANDS([default],[[ echo timestamp > stamp-h ]],[[]])
 AC_OUTPUT

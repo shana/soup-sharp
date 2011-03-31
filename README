@@ -1,0 +1,10 @@
+libsoup c# bindings
+
+This is really a test to see how the process works, from a .gir file to a complete binding.
+
+
+===== BUILDING ====
+
+autoreconf -i
+./configure
+make

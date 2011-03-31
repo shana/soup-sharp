@@ -1,0 +1,1305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api>
+  <namespace name="Soup" library="soup-2.4">
+    <object name="Address" cname="SoupAddress" parent="GObject">
+      <method name="GetType" cname="soup_address_get_type" shared="true">
+        <return-type type="GType"/>
+      </method>
+      <constructor cname="soup_address_new">
+        <parameters>
+          <parameter type="char*" name="name"/>
+          <parameter type="guint" name="port"/>
+        </parameters>
+      </constructor>
+      <constructor cname="soup_address_new_from_sockaddr">
+        <parameters>
+          <parameter type="any*" name="sa"/>
+          <parameter type="int" name="len"/>
+        </parameters>
+      </constructor>
+      <constructor cname="soup_address_new_any">
+        <parameters>
+          <parameter type="SoupAddressFamily" name="family"/>
+          <parameter type="guint" name="port"/>
+        </parameters>
+      </constructor>
+      <method name="ResolveAsync" cname="soup_address_resolve_async">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="async_context" type="GMainContext*"/>
+          <parameter name="cancellable" type="GCancellable*"/>
+          <parameter name="callback" type="SoupAddressCallback"/>
+          <parameter name="user_data" type="gpointer"/>
+        </parameters>
+      </method>
+      <method name="ResolveSync" cname="soup_address_resolve_sync">
+        <return-type type="guint"/>
+        <parameters>
+          <parameter name="cancellable" type="GCancellable*"/>
+        </parameters>
+      </method>
+      <method name="GetName" cname="soup_address_get_name">
+        <return-type type="const-char*"/>
+      </method>
+      <method name="GetPhysical" cname="soup_address_get_physical">
+        <return-type type="const-char*"/>
+      </method>
+      <method name="GetPort" cname="soup_address_get_port">
+        <return-type type="guint"/>
+      </method>
+      <method name="GetSockaddr" cname="soup_address_get_sockaddr">
+        <return-type type="any*"/>
+        <parameters>
+          <parameter name="len" type="int*"/>
+        </parameters>
+      </method>
+      <method name="GetGsockaddr" cname="soup_address_get_gsockaddr">
+        <return-type type="GSocketAddress*"/>
+      </method>
+      <method name="IsResolved" cname="soup_address_is_resolved">
+        <return-type type="gboolean"/>
+      </method>
+    </object>
+    <callback name="AddressCallback" cname="">
+      <return-type type="void"/>
+      <parameters>
+        <parameter name="addr" type="SoupAddress*"/>
+        <parameter name="status" type="guint"/>
+        <parameter name="data" type="gpointer"/>
+      </parameters>
+    </callback>
+    <enum name="AddressFamily" cname="SoupAddressFamily">
+      <member cname="SOUP_ADDRESS_FAMILY_INVALID" name="Invalid"/>
+      <member cname="SOUP_ADDRESS_FAMILY_IPV6" name="Ipv6"/>
+      <member cname="SOUP_ADDRESS_FAMILY_IPV4" name="Ipv4"/>
+    </enum>
+    <object name="Auth" cname="SoupAuth" parent="GObject">
+      <method name="GetType" cname="soup_auth_get_type" shared="true">
+        <return-type type="GType"/>
+      </method>
+      <constructor cname="soup_auth_new">
+        <parameters>
+          <parameter type="GType" name="type"/>
+          <parameter type="SoupMessage*" name="msg"/>
+          <parameter type="char*" name="auth_header"/>
+        </parameters>
+      </constructor>
+      <virtual_method name="Update" cname="update">
+        <return-type type="gboolean"/>
+        <parameters>
+          <parameter name="msg" type="SoupMessage*"/>
+          <parameter name="auth_params" type="GHashTable*"/>
+        </parameters>
+      </virtual_method>
+      <virtual_method name="GetProtectionSpace" cname="get_protection_space">
+        <return-type type="GSList*"/>
+        <parameters>
+          <parameter name="source_uri" type="SoupURI*"/>
+        </parameters>
+      </virtual_method>
+      <virtual_method name="Authenticate" cname="authenticate">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="username" type="const-char*"/>
+          <parameter name="password" type="const-char*"/>
+        </parameters>
+      </virtual_method>
+      <virtual_method name="IsAuthenticated" cname="is_authenticated">
+        <return-type type="gboolean"/>
+      </virtual_method>
+      <virtual_method name="GetAuthorization" cname="get_authorization">
+        <return-type type="char*"/>
+        <parameters>
+          <parameter name="msg" type="SoupMessage*"/>
+        </parameters>
+      </virtual_method>
+      <method name="Update" cname="soup_auth_update">
+        <return-type type="gboolean"/>
+        <parameters>
+          <parameter name="msg" type="SoupMessage*"/>
+          <parameter name="auth_header" type="const-char*"/>
+        </parameters>
+      </method>
+      <method name="IsForProxy" cname="soup_auth_is_for_proxy">
+        <return-type type="gboolean"/>
+      </method>
+      <method name="GetSchemeName" cname="soup_auth_get_scheme_name">
+        <return-type type="const-char*"/>
+      </method>
+      <method name="GetHost" cname="soup_auth_get_host">
+        <return-type type="const-char*"/>
+      </method>
+      <method name="GetRealm" cname="soup_auth_get_realm">
+        <return-type type="const-char*"/>
+      </method>
+      <method name="GetInfo" cname="soup_auth_get_info">
+        <return-type type="char*"/>
+      </method>
+      <method name="Authenticate" cname="soup_auth_authenticate">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="username" type="const-char*"/>
+          <parameter name="password" type="const-char*"/>
+        </parameters>
+      </method>
+      <method name="IsAuthenticated" cname="soup_auth_is_authenticated">
+        <return-type type="gboolean"/>
+      </method>
+      <method name="GetAuthorization" cname="soup_auth_get_authorization">
+        <return-type type="char*"/>
+        <parameters>
+          <parameter name="msg" type="SoupMessage*"/>
+        </parameters>
+      </method>
+      <method name="GetProtectionSpace" cname="soup_auth_get_protection_space">
+        <return-type type="GSList*"/>
+        <parameters>
+          <parameter name="source_uri" type="SoupURI*"/>
+        </parameters>
+      </method>
+      <method name="FreeProtectionSpace" cname="soup_auth_free_protection_space">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="space" type="GSList*"/>
+        </parameters>
+      </method>
+      <signal name="SavePassword" cname="save-password">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="auth" type="SoupAuth*"/>
+          <parameter name="_object" type="const-gchar*"/>
+          <parameter name="p0" type="const-gchar*"/>
+        </parameters>
+      </signal>
+    </object>
+    <object name="AuthDomain" cname="SoupAuthDomain" parent="GObject">
+      <method name="GetType" cname="soup_auth_domain_get_type" shared="true">
+        <return-type type="GType"/>
+      </method>
+      <virtual_method name="Accepts" cname="accepts">
+        <return-type type="char*"/>
+        <parameters>
+          <parameter name="msg" type="SoupMessage*"/>
+          <parameter name="header" type="const-char*"/>
+        </parameters>
+      </virtual_method>
+      <virtual_method name="Challenge" cname="challenge">
+        <return-type type="char*"/>
+        <parameters>
+          <parameter name="msg" type="SoupMessage*"/>
+        </parameters>
+      </virtual_method>
+      <virtual_method name="CheckPassword" cname="check_password">
+        <return-type type="gboolean"/>
+        <parameters>
+          <parameter name="msg" type="SoupMessage*"/>
+          <parameter name="username" type="const-char*"/>
+          <parameter name="password" type="const-char*"/>
+        </parameters>
+      </virtual_method>
+      <method name="AddPath" cname="soup_auth_domain_add_path">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="path" type="const-char*"/>
+        </parameters>
+      </method>
+      <method name="RemovePath" cname="soup_auth_domain_remove_path">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="path" type="const-char*"/>
+        </parameters>
+      </method>
+      <method name="SetFilter" cname="soup_auth_domain_set_filter">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="filter" type="SoupAuthDomainFilter"/>
+          <parameter name="filter_data" type="gpointer"/>
+          <parameter name="dnotify" type="GDestroyNotify"/>
+        </parameters>
+      </method>
+      <method name="GetRealm" cname="soup_auth_domain_get_realm">
+        <return-type type="const-char*"/>
+      </method>
+      <method name="SetGenericAuthCallback" cname="soup_auth_domain_set_generic_auth_callback">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="auth_callback" type="SoupAuthDomainGenericAuthCallback"/>
+          <parameter name="auth_data" type="gpointer"/>
+          <parameter name="dnotify" type="GDestroyNotify"/>
+        </parameters>
+      </method>
+      <method name="CheckPassword" cname="soup_auth_domain_check_password">
+        <return-type type="gboolean"/>
+        <parameters>
+          <parameter name="msg" type="SoupMessage*"/>
+          <parameter name="username" type="const-char*"/>
+          <parameter name="password" type="const-char*"/>
+        </parameters>
+      </method>
+      <method name="Covers" cname="soup_auth_domain_covers">
+        <return-type type="gboolean"/>
+        <parameters>
+          <parameter name="msg" type="SoupMessage*"/>
+        </parameters>
+      </method>
+      <method name="Accepts" cname="soup_auth_domain_accepts">
+        <return-type type="char*"/>
+        <parameters>
+          <parameter name="msg" type="SoupMessage*"/>
+        </parameters>
+      </method>
+      <method name="Challenge" cname="soup_auth_domain_challenge">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="msg" type="SoupMessage*"/>
+        </parameters>
+      </method>
+      <method name="TryGenericAuthCallback" cname="soup_auth_domain_try_generic_auth_callback">
+        <return-type type="gboolean"/>
+        <parameters>
+          <parameter name="msg" type="SoupMessage*"/>
+          <parameter name="username" type="const-char*"/>
+        </parameters>
+      </method>
+      <method name="BasicSetAuthCallback" cname="soup_auth_domain_basic_set_auth_callback">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="callback" type="SoupAuthDomainBasicAuthCallback"/>
+          <parameter name="user_data" type="gpointer"/>
+          <parameter name="dnotify" type="GDestroyNotify"/>
+        </parameters>
+      </method>
+      <method name="DigestSetAuthCallback" cname="soup_auth_domain_digest_set_auth_callback">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="callback" type="SoupAuthDomainDigestAuthCallback"/>
+          <parameter name="user_data" type="gpointer"/>
+          <parameter name="dnotify" type="GDestroyNotify"/>
+        </parameters>
+      </method>
+    </object>
+    <object name="AuthDomainBasic" cname="SoupAuthDomainBasic" parent="SoupAuthDomain">
+      <method name="GetType" cname="soup_auth_domain_basic_get_type" shared="true">
+        <return-type type="GType"/>
+      </method>
+      <constructor cname="soup_auth_domain_basic_new">
+        <parameters>
+          <parameter type="char*" name="optname1"/>
+          <parameter type="" name=""/>
+        </parameters>
+      </constructor>
+    </object>
+    <callback name="AuthDomainBasicAuthCallback" cname="">
+      <return-type type="gboolean"/>
+      <parameters>
+        <parameter name="domain" type="SoupAuthDomain*"/>
+        <parameter name="msg" type="SoupMessage*"/>
+        <parameter name="username" type="const-char*"/>
+        <parameter name="password" type="const-char*"/>
+        <parameter name="user_data" type="gpointer"/>
+      </parameters>
+    </callback>
+    <object name="AuthDomainDigest" cname="SoupAuthDomainDigest" parent="SoupAuthDomain">
+      <method name="GetType" cname="soup_auth_domain_digest_get_type" shared="true">
+        <return-type type="GType"/>
+      </method>
+      <constructor cname="soup_auth_domain_digest_new">
+        <parameters>
+          <parameter type="char*" name="optname1"/>
+          <parameter type="" name=""/>
+        </parameters>
+      </constructor>
+    </object>
+    <callback name="AuthDomainDigestAuthCallback" cname="">
+      <return-type type="char*"/>
+      <parameters>
+        <parameter name="domain" type="SoupAuthDomain*"/>
+        <parameter name="msg" type="SoupMessage*"/>
+        <parameter name="username" type="const-char*"/>
+        <parameter name="user_data" type="gpointer"/>
+      </parameters>
+    </callback>
+    <callback name="AuthDomainFilter" cname="">
+      <return-type type="gboolean"/>
+      <parameters>
+        <parameter name="domain" type="SoupAuthDomain*"/>
+        <parameter name="msg" type="SoupMessage*"/>
+        <parameter name="user_data" type="gpointer"/>
+      </parameters>
+    </callback>
+    <callback name="AuthDomainGenericAuthCallback" cname="">
+      <return-type type="gboolean"/>
+      <parameters>
+        <parameter name="domain" type="SoupAuthDomain*"/>
+        <parameter name="msg" type="SoupMessage*"/>
+        <parameter name="username" type="const-char*"/>
+        <parameter name="user_data" type="gpointer"/>
+      </parameters>
+    </callback>
+    <callback name="ChunkAllocator" cname="">
+      <return-type type="SoupBuffer*"/>
+      <parameters>
+        <parameter name="msg" type="SoupMessage*"/>
+        <parameter name="max_len" type="gsize"/>
+        <parameter name="user_data" type="gpointer"/>
+      </parameters>
+    </callback>
+    <enum name="ConnectionState" cname="SoupConnectionState">
+      <member cname="SOUP_CONNECTION_NEW" name="New"/>
+      <member cname="SOUP_CONNECTION_CONNECTING" name="Connecting"/>
+      <member cname="SOUP_CONNECTION_IDLE" name="Idle"/>
+      <member cname="SOUP_CONNECTION_IN_USE" name="InUse"/>
+      <member cname="SOUP_CONNECTION_REMOTE_DISCONNECTED" name="RemoteDisconnected"/>
+      <member cname="SOUP_CONNECTION_DISCONNECTED" name="Disconnected"/>
+    </enum>
+    <object name="ContentDecoder" cname="SoupContentDecoder" parent="GObject">
+      <method name="GetType" cname="soup_content_decoder_get_type" shared="true">
+        <return-type type="GType"/>
+      </method>
+    </object>
+    <object name="ContentSniffer" cname="SoupContentSniffer" parent="GObject">
+      <method name="GetType" cname="soup_content_sniffer_get_type" shared="true">
+        <return-type type="GType"/>
+      </method>
+      <constructor cname="soup_content_sniffer_new"/>
+      <virtual_method name="Sniff" cname="sniff">
+        <return-type type="char*"/>
+        <parameters>
+          <parameter name="msg" type="SoupMessage*"/>
+          <parameter name="buffer" type="SoupBuffer*"/>
+          <parameter name="params" type="GHashTable**"/>
+        </parameters>
+      </virtual_method>
+      <virtual_method name="GetBufferSize" cname="get_buffer_size">
+        <return-type type="gsize"/>
+      </virtual_method>
+      <method name="Sniff" cname="soup_content_sniffer_sniff">
+        <return-type type="char*"/>
+        <parameters>
+          <parameter name="msg" type="SoupMessage*"/>
+          <parameter name="buffer" type="SoupBuffer*"/>
+          <parameter name="params" type="GHashTable**"/>
+        </parameters>
+      </method>
+    </object>
+    <object name="CookieJar" cname="SoupCookieJar" parent="GObject">
+      <method name="GetType" cname="soup_cookie_jar_get_type" shared="true">
+        <return-type type="GType"/>
+      </method>
+      <constructor cname="soup_cookie_jar_new"/>
+      <virtual_method name="Save" cname="save">
+        <return-type type="void"/>
+      </virtual_method>
+      <method name="Save" cname="soup_cookie_jar_save">
+        <return-type type="void"/>
+      </method>
+      <method name="GetCookies" cname="soup_cookie_jar_get_cookies">
+        <return-type type="char*"/>
+        <parameters>
+          <parameter name="uri" type="SoupURI*"/>
+          <parameter name="for_http" type="gboolean"/>
+        </parameters>
+      </method>
+      <method name="SetCookie" cname="soup_cookie_jar_set_cookie">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="uri" type="SoupURI*"/>
+          <parameter name="cookie" type="const-char*"/>
+        </parameters>
+      </method>
+      <method name="SetCookieWithFirstParty" cname="soup_cookie_jar_set_cookie_with_first_party">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="uri" type="SoupURI*"/>
+          <parameter name="first_party" type="SoupURI*"/>
+          <parameter name="cookie" type="const-char*"/>
+        </parameters>
+      </method>
+      <method name="AddCookie" cname="soup_cookie_jar_add_cookie">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="cookie" type="SoupCookie*"/>
+        </parameters>
+      </method>
+      <method name="DeleteCookie" cname="soup_cookie_jar_delete_cookie">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="cookie" type="SoupCookie*"/>
+        </parameters>
+      </method>
+      <method name="AllCookies" cname="soup_cookie_jar_all_cookies">
+        <return-type type="GSList*"/>
+      </method>
+      <method name="SetAcceptPolicy" cname="soup_cookie_jar_set_accept_policy">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="policy" type="SoupCookieJarAcceptPolicy"/>
+        </parameters>
+      </method>
+      <method name="GetAcceptPolicy" cname="soup_cookie_jar_get_accept_policy">
+        <return-type type="SoupCookieJarAcceptPolicy"/>
+      </method>
+      <signal name="Changed" cname="changed">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="cookiejar" type="SoupCookieJar*"/>
+          <parameter name="_object" type="SoupCookie"/>
+          <parameter name="p0" type="SoupCookie"/>
+        </parameters>
+      </signal>
+    </object>
+    <enum name="CookieJarAcceptPolicy" cname="SoupCookieJarAcceptPolicy">
+      <member cname="SOUP_COOKIE_JAR_ACCEPT_ALWAYS" name="Always"/>
+      <member cname="SOUP_COOKIE_JAR_ACCEPT_NEVER" name="Never"/>
+      <member cname="SOUP_COOKIE_JAR_ACCEPT_NO_THIRD_PARTY" name="NoThirdParty"/>
+    </enum>
+    <object name="CookieJarText" cname="SoupCookieJarText" parent="SoupCookieJar">
+      <method name="GetType" cname="soup_cookie_jar_text_get_type" shared="true">
+        <return-type type="GType"/>
+      </method>
+      <constructor cname="soup_cookie_jar_text_new">
+        <parameters>
+          <parameter type="char*" name="filename"/>
+          <parameter type="gboolean" name="read_only"/>
+        </parameters>
+      </constructor>
+    </object>
+    <enum name="DateFormat" cname="SoupDateFormat">
+      <member cname="SOUP_DATE_HTTP" name="Http"/>
+      <member cname="SOUP_DATE_COOKIE" name="Cookie"/>
+      <member cname="SOUP_DATE_RFC2822" name="Rfc2822"/>
+      <member cname="SOUP_DATE_ISO8601_COMPACT" name="Iso8601Compact"/>
+      <member cname="SOUP_DATE_ISO8601_FULL" name="Iso8601Full"/>
+      <member cname="SOUP_DATE_ISO8601" name="Iso8601"/>
+      <member cname="SOUP_DATE_ISO8601_XMLRPC" name="Iso8601Xmlrpc"/>
+    </enum>
+    <enum name="Encoding" cname="SoupEncoding">
+      <member cname="SOUP_ENCODING_UNRECOGNIZED" name="Unrecognized"/>
+      <member cname="SOUP_ENCODING_NONE" name="None"/>
+      <member cname="SOUP_ENCODING_CONTENT_LENGTH" name="ContentLength"/>
+      <member cname="SOUP_ENCODING_EOF" name="Eof"/>
+      <member cname="SOUP_ENCODING_CHUNKED" name="Chunked"/>
+      <member cname="SOUP_ENCODING_BYTERANGES" name="Byteranges"/>
+    </enum>
+    <enum name="HTTPVersion" cname="SoupHTTPVersion">
+      <member cname="SOUP_HTTP_1_0" name="SOUPHTTP10"/>
+      <member cname="SOUP_HTTP_1_1" name="SOUPHTTP11"/>
+    </enum>
+    <enum name="KnownStatusCode" cname="SoupKnownStatusCode">
+      <member cname="SOUP_STATUS_NONE" name="None"/>
+      <member cname="SOUP_STATUS_CANCELLED" name="Cancelled"/>
+      <member cname="SOUP_STATUS_TOO_MANY_REDIRECTS" name="TooManyRedirects"/>
+      <member cname="SOUP_STATUS_CONTINUE" name="Continue"/>
+      <member cname="SOUP_STATUS_SWITCHING_PROTOCOLS" name="SwitchingProtocols"/>
+      <member cname="SOUP_STATUS_PROCESSING" name="Processing"/>
+      <member cname="SOUP_STATUS_CANT_RESOLVE" name="CantResolve"/>
+      <member cname="SOUP_STATUS_OK" name="Ok"/>
+      <member cname="SOUP_STATUS_CREATED" name="Created"/>
+      <member cname="SOUP_STATUS_ACCEPTED" name="Accepted"/>
+      <member cname="SOUP_STATUS_NON_AUTHORITATIVE" name="NonAuthoritative"/>
+      <member cname="SOUP_STATUS_NO_CONTENT" name="NoContent"/>
+      <member cname="SOUP_STATUS_RESET_CONTENT" name="ResetContent"/>
+      <member cname="SOUP_STATUS_PARTIAL_CONTENT" name="PartialContent"/>
+      <member cname="SOUP_STATUS_MULTI_STATUS" name="MultiStatus"/>
+      <member cname="SOUP_STATUS_CANT_RESOLVE_PROXY" name="CantResolveProxy"/>
+      <member cname="SOUP_STATUS_MULTIPLE_CHOICES" name="MultipleChoices"/>
+      <member cname="SOUP_STATUS_MOVED_PERMANENTLY" name="MovedPermanently"/>
+      <member cname="SOUP_STATUS_FOUND" name="Found"/>
+      <member cname="SOUP_STATUS_MOVED_TEMPORARILY" name="MovedTemporarily"/>
+      <member cname="SOUP_STATUS_SEE_OTHER" name="SeeOther"/>
+      <member cname="SOUP_STATUS_NOT_MODIFIED" name="NotModified"/>
+      <member cname="SOUP_STATUS_USE_PROXY" name="UseProxy"/>
+      <member cname="SOUP_STATUS_NOT_APPEARING_IN_THIS_PROTOCOL" name="NotAppearingInThisProtocol"/>
+      <member cname="SOUP_STATUS_TEMPORARY_REDIRECT" name="TemporaryRedirect"/>
+      <member cname="SOUP_STATUS_CANT_CONNECT" name="CantConnect"/>
+      <member cname="SOUP_STATUS_BAD_REQUEST" name="BadRequest"/>
+      <member cname="SOUP_STATUS_UNAUTHORIZED" name="Unauthorized"/>
+      <member cname="SOUP_STATUS_PAYMENT_REQUIRED" name="PaymentRequired"/>
+      <member cname="SOUP_STATUS_FORBIDDEN" name="Forbidden"/>
+      <member cname="SOUP_STATUS_NOT_FOUND" name="NotFound"/>
+      <member cname="SOUP_STATUS_METHOD_NOT_ALLOWED" name="MethodNotAllowed"/>
+      <member cname="SOUP_STATUS_NOT_ACCEPTABLE" name="NotAcceptable"/>
+      <member cname="SOUP_STATUS_PROXY_AUTHENTICATION_REQUIRED" name="ProxyAuthenticationRequired"/>
+      <member cname="SOUP_STATUS_PROXY_UNAUTHORIZED" name="ProxyUnauthorized"/>
+      <member cname="SOUP_STATUS_REQUEST_TIMEOUT" name="RequestTimeout"/>
+      <member cname="SOUP_STATUS_CONFLICT" name="Conflict"/>
+      <member cname="SOUP_STATUS_GONE" name="Gone"/>
+      <member cname="SOUP_STATUS_LENGTH_REQUIRED" name="LengthRequired"/>
+      <member cname="SOUP_STATUS_PRECONDITION_FAILED" name="PreconditionFailed"/>
+      <member cname="SOUP_STATUS_REQUEST_ENTITY_TOO_LARGE" name="RequestEntityTooLarge"/>
+      <member cname="SOUP_STATUS_REQUEST_URI_TOO_LONG" name="RequestUriTooLong"/>
+      <member cname="SOUP_STATUS_UNSUPPORTED_MEDIA_TYPE" name="UnsupportedMediaType"/>
+      <member cname="SOUP_STATUS_REQUESTED_RANGE_NOT_SATISFIABLE" name="RequestedRangeNotSatisfiable"/>
+      <member cname="SOUP_STATUS_INVALID_RANGE" name="InvalidRange"/>
+      <member cname="SOUP_STATUS_EXPECTATION_FAILED" name="ExpectationFailed"/>
+      <member cname="SOUP_STATUS_UNPROCESSABLE_ENTITY" name="UnprocessableEntity"/>
+      <member cname="SOUP_STATUS_LOCKED" name="Locked"/>
+      <member cname="SOUP_STATUS_FAILED_DEPENDENCY" name="FailedDependency"/>
+      <member cname="SOUP_STATUS_CANT_CONNECT_PROXY" name="CantConnectProxy"/>
+      <member cname="SOUP_STATUS_INTERNAL_SERVER_ERROR" name="InternalServerError"/>
+      <member cname="SOUP_STATUS_NOT_IMPLEMENTED" name="NotImplemented"/>
+      <member cname="SOUP_STATUS_BAD_GATEWAY" name="BadGateway"/>
+      <member cname="SOUP_STATUS_SERVICE_UNAVAILABLE" name="ServiceUnavailable"/>
+      <member cname="SOUP_STATUS_GATEWAY_TIMEOUT" name="GatewayTimeout"/>
+      <member cname="SOUP_STATUS_HTTP_VERSION_NOT_SUPPORTED" name="HttpVersionNotSupported"/>
+      <member cname="SOUP_STATUS_INSUFFICIENT_STORAGE" name="InsufficientStorage"/>
+      <member cname="SOUP_STATUS_NOT_EXTENDED" name="NotExtended"/>
+      <member cname="SOUP_STATUS_SSL_FAILED" name="SslFailed"/>
+      <member cname="SOUP_STATUS_IO_ERROR" name="IoError"/>
+      <member cname="SOUP_STATUS_MALFORMED" name="Malformed"/>
+      <member cname="SOUP_STATUS_TRY_AGAIN" name="TryAgain"/>
+    </enum>
+    <object name="Logger" cname="SoupLogger" parent="GObject">
+      <method name="GetType" cname="soup_logger_get_type" shared="true">
+        <return-type type="GType"/>
+      </method>
+      <constructor cname="soup_logger_new">
+        <parameters>
+          <parameter type="SoupLoggerLogLevel" name="level"/>
+          <parameter type="int" name="max_body_size"/>
+        </parameters>
+      </constructor>
+      <method name="Attach" cname="soup_logger_attach">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="session" type="SoupSession*"/>
+        </parameters>
+      </method>
+      <method name="Detach" cname="soup_logger_detach">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="session" type="SoupSession*"/>
+        </parameters>
+      </method>
+      <method name="SetRequestFilter" cname="soup_logger_set_request_filter">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="request_filter" type="SoupLoggerFilter"/>
+          <parameter name="filter_data" type="gpointer"/>
+          <parameter name="destroy" type="GDestroyNotify"/>
+        </parameters>
+      </method>
+      <method name="SetResponseFilter" cname="soup_logger_set_response_filter">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="response_filter" type="SoupLoggerFilter"/>
+          <parameter name="filter_data" type="gpointer"/>
+          <parameter name="destroy" type="GDestroyNotify"/>
+        </parameters>
+      </method>
+      <method name="SetPrinter" cname="soup_logger_set_printer">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="printer" type="SoupLoggerPrinter"/>
+          <parameter name="printer_data" type="gpointer"/>
+          <parameter name="destroy" type="GDestroyNotify"/>
+        </parameters>
+      </method>
+    </object>
+    <callback name="LoggerFilter" cname="">
+      <return-type type="SoupLoggerLogLevel"/>
+      <parameters>
+        <parameter name="logger" type="SoupLogger*"/>
+        <parameter name="msg" type="SoupMessage*"/>
+        <parameter name="user_data" type="gpointer"/>
+      </parameters>
+    </callback>
+    <enum name="LoggerLogLevel" cname="SoupLoggerLogLevel">
+      <member cname="SOUP_LOGGER_LOG_NONE" name="None"/>
+      <member cname="SOUP_LOGGER_LOG_MINIMAL" name="Minimal"/>
+      <member cname="SOUP_LOGGER_LOG_HEADERS" name="Headers"/>
+      <member cname="SOUP_LOGGER_LOG_BODY" name="Body"/>
+    </enum>
+    <callback name="LoggerPrinter" cname="">
+      <return-type type="void"/>
+      <parameters>
+        <parameter name="logger" type="SoupLogger*"/>
+        <parameter name="level" type="SoupLoggerLogLevel"/>
+        <parameter name="direction" type="char"/>
+        <parameter name="data" type="const-char*"/>
+        <parameter name="user_data" type="gpointer"/>
+      </parameters>
+    </callback>
+    <enum name="MemoryUse" cname="SoupMemoryUse">
+      <member cname="SOUP_MEMORY_STATIC" name="Static"/>
+      <member cname="SOUP_MEMORY_TAKE" name="Take"/>
+      <member cname="SOUP_MEMORY_COPY" name="Copy"/>
+      <member cname="SOUP_MEMORY_TEMPORARY" name="Temporary"/>
+    </enum>
+    <object name="Message" cname="SoupMessage" parent="GObject">
+      <method name="GetType" cname="soup_message_get_type" shared="true">
+        <return-type type="GType"/>
+      </method>
+      <constructor cname="soup_message_new">
+        <parameters>
+          <parameter type="char*" name="method"/>
+          <parameter type="char*" name="uri_string"/>
+        </parameters>
+      </constructor>
+      <constructor cname="soup_message_new_from_uri">
+        <parameters>
+          <parameter type="char*" name="method"/>
+          <parameter type="SoupURI*" name="uri"/>
+        </parameters>
+      </constructor>
+      <method name="SetRequest" cname="soup_message_set_request">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="content_type" type="const-char*"/>
+          <parameter name="req_use" type="SoupMemoryUse"/>
+          <parameter name="req_body" type="const-char*"/>
+          <parameter name="req_length" type="gsize"/>
+        </parameters>
+      </method>
+      <method name="SetResponse" cname="soup_message_set_response">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="content_type" type="const-char*"/>
+          <parameter name="resp_use" type="SoupMemoryUse"/>
+          <parameter name="resp_body" type=""/>
+          <parameter name="resp_length" type="gsize"/>
+        </parameters>
+      </method>
+      <method name="SetHttpVersion" cname="soup_message_set_http_version">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="version" type="SoupHTTPVersion"/>
+        </parameters>
+      </method>
+      <method name="GetHttpVersion" cname="soup_message_get_http_version">
+        <return-type type="SoupHTTPVersion"/>
+      </method>
+      <method name="IsKeepalive" cname="soup_message_is_keepalive">
+        <return-type type="gboolean"/>
+      </method>
+      <method name="GetUri" cname="soup_message_get_uri">
+        <return-type type="SoupURI*"/>
+      </method>
+      <method name="SetUri" cname="soup_message_set_uri">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="uri" type="SoupURI*"/>
+        </parameters>
+      </method>
+      <method name="GetAddress" cname="soup_message_get_address">
+        <return-type type="SoupAddress*"/>
+      </method>
+      <method name="GetFirstParty" cname="soup_message_get_first_party">
+        <return-type type="SoupURI*"/>
+      </method>
+      <method name="SetFirstParty" cname="soup_message_set_first_party">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="first_party" type="SoupURI*"/>
+        </parameters>
+      </method>
+      <method name="SetFlags" cname="soup_message_set_flags">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="flags" type="SoupMessageFlags"/>
+        </parameters>
+      </method>
+      <method name="GetFlags" cname="soup_message_get_flags">
+        <return-type type="SoupMessageFlags"/>
+      </method>
+      <method name="AddHeaderHandler" cname="soup_message_add_header_handler">
+        <return-type type="guint"/>
+        <parameters>
+          <parameter name="signal" type="const-char*"/>
+          <parameter name="header" type="const-char*"/>
+          <parameter name="callback" type="GCallback"/>
+          <parameter name="user_data" type="gpointer"/>
+        </parameters>
+      </method>
+      <method name="AddStatusCodeHandler" cname="soup_message_add_status_code_handler">
+        <return-type type="guint"/>
+        <parameters>
+          <parameter name="signal" type="const-char*"/>
+          <parameter name="status_code" type="guint"/>
+          <parameter name="callback" type="GCallback"/>
+          <parameter name="user_data" type="gpointer"/>
+        </parameters>
+      </method>
+      <method name="SetStatus" cname="soup_message_set_status">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="status_code" type="guint"/>
+        </parameters>
+      </method>
+      <method name="SetStatusFull" cname="soup_message_set_status_full">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="status_code" type="guint"/>
+          <parameter name="reason_phrase" type="const-char*"/>
+        </parameters>
+      </method>
+      <method name="SetChunkAllocator" cname="soup_message_set_chunk_allocator">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="allocator" type="SoupChunkAllocator"/>
+          <parameter name="user_data" type="gpointer"/>
+          <parameter name="destroy_notify" type="GDestroyNotify"/>
+        </parameters>
+      </method>
+      <method name="DisableFeature" cname="soup_message_disable_feature">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="feature_type" type="GType"/>
+        </parameters>
+      </method>
+      <method name="WroteInformational" cname="soup_message_wrote_informational">
+        <return-type type="void"/>
+      </method>
+      <method name="WroteHeaders" cname="soup_message_wrote_headers">
+        <return-type type="void"/>
+      </method>
+      <method name="WroteChunk" cname="soup_message_wrote_chunk">
+        <return-type type="void"/>
+      </method>
+      <method name="WroteBodyData" cname="soup_message_wrote_body_data">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="chunk" type="SoupBuffer*"/>
+        </parameters>
+      </method>
+      <method name="WroteBody" cname="soup_message_wrote_body">
+        <return-type type="void"/>
+      </method>
+      <method name="GotInformational" cname="soup_message_got_informational">
+        <return-type type="void"/>
+      </method>
+      <method name="GotHeaders" cname="soup_message_got_headers">
+        <return-type type="void"/>
+      </method>
+      <method name="GotChunk" cname="soup_message_got_chunk">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="chunk" type="SoupBuffer*"/>
+        </parameters>
+      </method>
+      <method name="GotBody" cname="soup_message_got_body">
+        <return-type type="void"/>
+      </method>
+      <method name="ContentSniffed" cname="soup_message_content_sniffed">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="content_type" type="const-char*"/>
+          <parameter name="params" type="GHashTable*"/>
+        </parameters>
+      </method>
+      <method name="Restarted" cname="soup_message_restarted">
+        <return-type type="void"/>
+      </method>
+      <method name="Finished" cname="soup_message_finished">
+        <return-type type="void"/>
+      </method>
+    </object>
+    <callback name="MessageHeadersForeachFunc" cname="">
+      <return-type type="void"/>
+      <parameters>
+        <parameter name="name" type="const-char*"/>
+        <parameter name="value" type="const-char*"/>
+        <parameter name="user_data" type="gpointer"/>
+      </parameters>
+    </callback>
+    <enum name="MessageHeadersType" cname="SoupMessageHeadersType">
+      <member cname="SOUP_MESSAGE_HEADERS_REQUEST" name="Request"/>
+      <member cname="SOUP_MESSAGE_HEADERS_RESPONSE" name="Response"/>
+      <member cname="SOUP_MESSAGE_HEADERS_MULTIPART" name="Multipart"/>
+    </enum>
+    <callback name="ProxyResolverCallback" cname="">
+      <return-type type="void"/>
+      <parameters>
+        <parameter name="" type="SoupProxyResolver*"/>
+        <parameter name="" type="SoupMessage*"/>
+        <parameter name="" type="guint"/>
+        <parameter name="" type="SoupAddress*"/>
+        <parameter name="" type="gpointer"/>
+      </parameters>
+    </callback>
+    <callback name="ProxyURIResolverCallback" cname="">
+      <return-type type="void"/>
+      <parameters>
+        <parameter name="resolver" type="SoupProxyURIResolver*"/>
+        <parameter name="status" type="guint"/>
+        <parameter name="proxy_uri" type="SoupURI*"/>
+        <parameter name="user_data" type="gpointer"/>
+      </parameters>
+    </callback>
+    <enum name="SSLError" cname="SoupSSLError">
+      <member cname="SOUP_SSL_ERROR_HANDSHAKE_NEEDS_READ" name="HandshakeNeedsRead"/>
+      <member cname="SOUP_SSL_ERROR_HANDSHAKE_NEEDS_WRITE" name="HandshakeNeedsWrite"/>
+      <member cname="SOUP_SSL_ERROR_CERTIFICATE" name="Certificate"/>
+      <member cname="SOUP_SSL_ERROR_HANDSHAKE_FAILED" name="HandshakeFailed"/>
+    </enum>
+    <object name="Server" cname="SoupServer" parent="GObject">
+      <method name="GetType" cname="soup_server_get_type" shared="true">
+        <return-type type="GType"/>
+      </method>
+      <constructor cname="soup_server_new">
+        <parameters>
+          <parameter type="char*" name="optname1"/>
+          <parameter type="" name=""/>
+        </parameters>
+      </constructor>
+      <method name="IsHttps" cname="soup_server_is_https">
+        <return-type type="gboolean"/>
+      </method>
+      <method name="GetPort" cname="soup_server_get_port">
+        <return-type type="guint"/>
+      </method>
+      <method name="GetListener" cname="soup_server_get_listener">
+        <return-type type="SoupSocket*"/>
+      </method>
+      <method name="Run" cname="soup_server_run">
+        <return-type type="void"/>
+      </method>
+      <method name="RunAsync" cname="soup_server_run_async">
+        <return-type type="void"/>
+      </method>
+      <method name="Quit" cname="soup_server_quit">
+        <return-type type="void"/>
+      </method>
+      <method name="GetAsyncContext" cname="soup_server_get_async_context">
+        <return-type type="GMainContext*"/>
+      </method>
+      <method name="AddHandler" cname="soup_server_add_handler">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="path" type="const-char*"/>
+          <parameter name="callback" type="SoupServerCallback"/>
+          <parameter name="user_data" type="gpointer"/>
+          <parameter name="destroy" type="GDestroyNotify"/>
+        </parameters>
+      </method>
+      <method name="RemoveHandler" cname="soup_server_remove_handler">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="path" type="const-char*"/>
+        </parameters>
+      </method>
+      <method name="AddAuthDomain" cname="soup_server_add_auth_domain">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="auth_domain" type="SoupAuthDomain*"/>
+        </parameters>
+      </method>
+      <method name="RemoveAuthDomain" cname="soup_server_remove_auth_domain">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="auth_domain" type="SoupAuthDomain*"/>
+        </parameters>
+      </method>
+      <method name="PauseMessage" cname="soup_server_pause_message">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="msg" type="SoupMessage*"/>
+        </parameters>
+      </method>
+      <method name="UnpauseMessage" cname="soup_server_unpause_message">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="msg" type="SoupMessage*"/>
+        </parameters>
+      </method>
+      <signal name="RequestAborted" cname="request-aborted">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="server" type="SoupServer*"/>
+          <parameter name="_object" type="SoupMessage"/>
+          <parameter name="p0" type="SoupClientContext"/>
+        </parameters>
+      </signal>
+      <signal name="RequestFinished" cname="request-finished">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="server" type="SoupServer*"/>
+          <parameter name="_object" type="SoupMessage"/>
+          <parameter name="p0" type="SoupClientContext"/>
+        </parameters>
+      </signal>
+      <signal name="RequestRead" cname="request-read">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="server" type="SoupServer*"/>
+          <parameter name="_object" type="SoupMessage"/>
+          <parameter name="p0" type="SoupClientContext"/>
+        </parameters>
+      </signal>
+      <signal name="RequestStarted" cname="request-started">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="server" type="SoupServer*"/>
+          <parameter name="_object" type="SoupMessage"/>
+          <parameter name="p0" type="SoupClientContext"/>
+        </parameters>
+      </signal>
+    </object>
+    <callback name="ServerCallback" cname="">
+      <return-type type="void"/>
+      <parameters>
+        <parameter name="server" type="SoupServer*"/>
+        <parameter name="msg" type="SoupMessage*"/>
+        <parameter name="path" type="const-char*"/>
+        <parameter name="query" type="GHashTable*"/>
+        <parameter name="client" type="SoupClientContext*"/>
+        <parameter name="user_data" type="gpointer"/>
+      </parameters>
+    </callback>
+    <object name="Session" cname="SoupSession" parent="GObject">
+      <method name="GetType" cname="soup_session_get_type" shared="true">
+        <return-type type="GType"/>
+      </method>
+      <virtual_method name="QueueMessage" cname="queue_message">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="msg" type="SoupMessage*"/>
+          <parameter name="callback" type="SoupSessionCallback"/>
+          <parameter name="user_data" type="gpointer"/>
+        </parameters>
+      </virtual_method>
+      <virtual_method name="RequeueMessage" cname="requeue_message">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="msg" type="SoupMessage*"/>
+        </parameters>
+      </virtual_method>
+      <virtual_method name="SendMessage" cname="send_message">
+        <return-type type="guint"/>
+        <parameters>
+          <parameter name="msg" type="SoupMessage*"/>
+        </parameters>
+      </virtual_method>
+      <virtual_method name="CancelMessage" cname="cancel_message">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="msg" type="SoupMessage*"/>
+          <parameter name="status_code" type="guint"/>
+        </parameters>
+      </virtual_method>
+      <virtual_method name="AuthRequired" cname="auth_required">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="msg" type="SoupMessage*"/>
+          <parameter name="auth" type="SoupAuth*"/>
+          <parameter name="retrying" type="gboolean"/>
+        </parameters>
+      </virtual_method>
+      <method name="GetAsyncContext" cname="soup_session_get_async_context">
+        <return-type type="GMainContext*"/>
+      </method>
+      <method name="QueueMessage" cname="soup_session_queue_message">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="msg" type="SoupMessage*"/>
+          <parameter name="callback" type="SoupSessionCallback"/>
+          <parameter name="user_data" type="gpointer"/>
+        </parameters>
+      </method>
+      <method name="RequeueMessage" cname="soup_session_requeue_message">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="msg" type="SoupMessage*"/>
+        </parameters>
+      </method>
+      <method name="SendMessage" cname="soup_session_send_message">
+        <return-type type="guint"/>
+        <parameters>
+          <parameter name="msg" type="SoupMessage*"/>
+        </parameters>
+      </method>
+      <method name="PauseMessage" cname="soup_session_pause_message">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="msg" type="SoupMessage*"/>
+        </parameters>
+      </method>
+      <method name="UnpauseMessage" cname="soup_session_unpause_message">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="msg" type="SoupMessage*"/>
+        </parameters>
+      </method>
+      <method name="CancelMessage" cname="soup_session_cancel_message">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="msg" type="SoupMessage*"/>
+          <parameter name="status_code" type="guint"/>
+        </parameters>
+      </method>
+      <method name="Abort" cname="soup_session_abort">
+        <return-type type="void"/>
+      </method>
+      <method name="PrepareForUri" cname="soup_session_prepare_for_uri">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="uri" type="SoupURI*"/>
+        </parameters>
+      </method>
+      <method name="AddFeature" cname="soup_session_add_feature">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="feature" type="SoupSessionFeature*"/>
+        </parameters>
+      </method>
+      <method name="AddFeatureByType" cname="soup_session_add_feature_by_type">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="feature_type" type="GType"/>
+        </parameters>
+      </method>
+      <method name="RemoveFeature" cname="soup_session_remove_feature">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="feature" type="SoupSessionFeature*"/>
+        </parameters>
+      </method>
+      <method name="RemoveFeatureByType" cname="soup_session_remove_feature_by_type">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="feature_type" type="GType"/>
+        </parameters>
+      </method>
+      <method name="GetFeatures" cname="soup_session_get_features">
+        <return-type type="GSList*"/>
+        <parameters>
+          <parameter name="feature_type" type="GType"/>
+        </parameters>
+      </method>
+      <method name="GetFeature" cname="soup_session_get_feature">
+        <return-type type="SoupSessionFeature*"/>
+        <parameters>
+          <parameter name="feature_type" type="GType"/>
+        </parameters>
+      </method>
+      <method name="GetFeatureForMessage" cname="soup_session_get_feature_for_message">
+        <return-type type="SoupSessionFeature*"/>
+        <parameters>
+          <parameter name="feature_type" type="GType"/>
+          <parameter name="msg" type="SoupMessage*"/>
+        </parameters>
+      </method>
+      <signal name="Authenticate" cname="authenticate">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="session" type="SoupSession*"/>
+          <parameter name="_object" type="SoupMessage"/>
+          <parameter name="p0" type="SoupAuth"/>
+          <parameter name="p1" type="gboolean"/>
+        </parameters>
+      </signal>
+      <signal name="ConnectionCreated" cname="connection-created">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="session" type="SoupSession*"/>
+          <parameter name="_object" type="GObject"/>
+        </parameters>
+      </signal>
+      <signal name="RequestQueued" cname="request-queued">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="session" type="SoupSession*"/>
+          <parameter name="_object" type="SoupMessage"/>
+        </parameters>
+      </signal>
+      <signal name="RequestStarted" cname="request-started">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="session" type="SoupSession*"/>
+          <parameter name="_object" type="SoupMessage"/>
+          <parameter name="p0" type="SoupSocket"/>
+        </parameters>
+      </signal>
+      <signal name="RequestUnqueued" cname="request-unqueued">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="session" type="SoupSession*"/>
+          <parameter name="_object" type="SoupMessage"/>
+        </parameters>
+      </signal>
+      <signal name="Tunneling" cname="tunneling">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="session" type="SoupSession*"/>
+          <parameter name="_object" type="GObject"/>
+        </parameters>
+      </signal>
+    </object>
+    <object name="SessionAsync" cname="SoupSessionAsync" parent="SoupSession">
+      <method name="GetType" cname="soup_session_async_get_type" shared="true">
+        <return-type type="GType"/>
+      </method>
+      <constructor cname="soup_session_async_new"/>
+      <constructor cname="soup_session_async_new_with_options">
+        <parameters>
+          <parameter type="char*" name="optname1"/>
+          <parameter type="" name=""/>
+        </parameters>
+      </constructor>
+    </object>
+    <callback name="SessionCallback" cname="">
+      <return-type type="void"/>
+      <parameters>
+        <parameter name="session" type="SoupSession*"/>
+        <parameter name="msg" type="SoupMessage*"/>
+        <parameter name="user_data" type="gpointer"/>
+      </parameters>
+    </callback>
+    <object name="SessionSync" cname="SoupSessionSync" parent="SoupSession">
+      <method name="GetType" cname="soup_session_sync_get_type" shared="true">
+        <return-type type="GType"/>
+      </method>
+      <constructor cname="soup_session_sync_new"/>
+      <constructor cname="soup_session_sync_new_with_options">
+        <parameters>
+          <parameter type="char*" name="optname1"/>
+          <parameter type="" name=""/>
+        </parameters>
+      </constructor>
+    </object>
+    <object name="Socket" cname="SoupSocket" parent="GObject">
+      <method name="GetType" cname="soup_socket_get_type" shared="true">
+        <return-type type="GType"/>
+      </method>
+      <constructor cname="soup_socket_new">
+        <parameters>
+          <parameter type="char*" name="optname1"/>
+          <parameter type="" name=""/>
+        </parameters>
+      </constructor>
+      <method name="ConnectAsync" cname="soup_socket_connect_async">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="cancellable" type="GCancellable*"/>
+          <parameter name="callback" type="SoupSocketCallback"/>
+          <parameter name="user_data" type="gpointer"/>
+        </parameters>
+      </method>
+      <method name="ConnectSync" cname="soup_socket_connect_sync">
+        <return-type type="guint"/>
+        <parameters>
+          <parameter name="cancellable" type="GCancellable*"/>
+        </parameters>
+      </method>
+      <method name="GetFd" cname="soup_socket_get_fd">
+        <return-type type="int"/>
+      </method>
+      <method name="Listen" cname="soup_socket_listen">
+        <return-type type="gboolean"/>
+      </method>
+      <method name="StartSsl" cname="soup_socket_start_ssl">
+        <return-type type="gboolean"/>
+        <parameters>
+          <parameter name="cancellable" type="GCancellable*"/>
+        </parameters>
+      </method>
+      <method name="StartProxySsl" cname="soup_socket_start_proxy_ssl">
+        <return-type type="gboolean"/>
+        <parameters>
+          <parameter name="ssl_host" type="const-char*"/>
+          <parameter name="cancellable" type="GCancellable*"/>
+        </parameters>
+      </method>
+      <method name="IsSsl" cname="soup_socket_is_ssl">
+        <return-type type="gboolean"/>
+      </method>
+      <method name="Disconnect" cname="soup_socket_disconnect">
+        <return-type type="void"/>
+      </method>
+      <method name="IsConnected" cname="soup_socket_is_connected">
+        <return-type type="gboolean"/>
+      </method>
+      <method name="GetLocalAddress" cname="soup_socket_get_local_address">
+        <return-type type="SoupAddress*"/>
+      </method>
+      <method name="GetRemoteAddress" cname="soup_socket_get_remote_address">
+        <return-type type="SoupAddress*"/>
+      </method>
+      <method name="Read" cname="soup_socket_read">
+        <return-type type="SoupSocketIOStatus"/>
+        <parameters>
+          <parameter name="buffer" type="gpointer"/>
+          <parameter name="len" type="gsize"/>
+          <parameter name="nread" type="gsize*"/>
+          <parameter name="cancellable" type="GCancellable*"/>
+        </parameters>
+      </method>
+      <method name="ReadUntil" cname="soup_socket_read_until">
+        <return-type type="SoupSocketIOStatus"/>
+        <parameters>
+          <parameter name="buffer" type="gpointer"/>
+          <parameter name="len" type="gsize"/>
+          <parameter name="boundary" type="gconstpointer"/>
+          <parameter name="boundary_len" type="gsize"/>
+          <parameter name="nread" type="gsize*"/>
+          <parameter name="got_boundary" type="gboolean*"/>
+          <parameter name="cancellable" type="GCancellable*"/>
+        </parameters>
+      </method>
+      <method name="Write" cname="soup_socket_write">
+        <return-type type="SoupSocketIOStatus"/>
+        <parameters>
+          <parameter name="buffer" type="gconstpointer"/>
+          <parameter name="len" type="gsize"/>
+          <parameter name="nwrote" type="gsize*"/>
+          <parameter name="cancellable" type="GCancellable*"/>
+        </parameters>
+      </method>
+      <signal name="Disconnected" cname="disconnected">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="socket" type="SoupSocket*"/>
+        </parameters>
+      </signal>
+      <signal name="NewConnection" cname="new-connection">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="socket" type="SoupSocket*"/>
+          <parameter name="_object" type="SoupSocket"/>
+        </parameters>
+      </signal>
+      <signal name="Readable" cname="readable">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="socket" type="SoupSocket*"/>
+        </parameters>
+      </signal>
+      <signal name="Writable" cname="writable">
+        <return-type type="void"/>
+        <parameters>
+          <parameter name="socket" type="SoupSocket*"/>
+        </parameters>
+      </signal>
+    </object>
+    <callback name="SocketCallback" cname="">
+      <return-type type="void"/>
+      <parameters>
+        <parameter name="sock" type="SoupSocket*"/>
+        <parameter name="status" type="guint"/>
+        <parameter name="user_data" type="gpointer"/>
+      </parameters>
+    </callback>
+    <enum name="SocketIOStatus" cname="SoupSocketIOStatus">
+      <member cname="SOUP_SOCKET_OK" name="Ok"/>
+      <member cname="SOUP_SOCKET_WOULD_BLOCK" name="WouldBlock"/>
+      <member cname="SOUP_SOCKET_EOF" name="Eof"/>
+      <member cname="SOUP_SOCKET_ERROR" name="Error"/>
+    </enum>
+    <enum name="XMLRPCError" cname="SoupXMLRPCError">
+      <member cname="SOUP_XMLRPC_ERROR_ARGUMENTS" name="Arguments"/>
+      <member cname="SOUP_XMLRPC_ERROR_RETVAL" name="Retval"/>
+    </enum>
+    <enum name="XMLRPCFault" cname="SoupXMLRPCFault">
+      <member cname="SOUP_XMLRPC_FAULT_TRANSPORT_ERROR" name="TransportError"/>
+      <member cname="SOUP_XMLRPC_FAULT_SYSTEM_ERROR" name="SystemError"/>
+      <member cname="SOUP_XMLRPC_FAULT_APPLICATION_ERROR" name="ApplicationError"/>
+      <member cname="SOUP_XMLRPC_FAULT_SERVER_ERROR_INVALID_XML_RPC" name="ServerErrorInvalidXmlRpc"/>
+      <member cname="SOUP_XMLRPC_FAULT_SERVER_ERROR_REQUESTED_METHOD_NOT_FOUND" name="ServerErrorRequestedMethodNotFound"/>
+      <member cname="SOUP_XMLRPC_FAULT_SERVER_ERROR_INVALID_METHOD_PARAMETERS" name="ServerErrorInvalidMethodParameters"/>
+      <member cname="SOUP_XMLRPC_FAULT_SERVER_ERROR_INTERNAL_XML_RPC_ERROR" name="ServerErrorInternalXmlRpcError"/>
+      <member cname="SOUP_XMLRPC_FAULT_PARSE_ERROR_NOT_WELL_FORMED" name="ParseErrorNotWellFormed"/>
+      <member cname="SOUP_XMLRPC_FAULT_PARSE_ERROR_UNSUPPORTED_ENCODING" name="ParseErrorUnsupportedEncoding"/>
+      <member cname="SOUP_XMLRPC_FAULT_PARSE_ERROR_INVALID_CHARACTER_FOR_ENCODING" name="ParseErrorInvalidCharacterForEncoding"/>
+    </enum>
+  </namespace>
+</api>

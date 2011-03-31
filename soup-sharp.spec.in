@@ -1,0 +1,45 @@
+Name:           soup-sharp
+Url:            http://www.go-mono.org/
+BuildRequires:  gtk-sharp2 gtk-sharp2-gapi libsoup2.4-devel mono-devel monodoc-core
+Requires:       libsoup => 2.0 gtk-sharp2
+License:        X11/MIT
+Group:          Development/Libraries/Other
+Summary:        LibSoup bindings for Mono
+BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+Version:        @VERSION@
+Release:        1
+BuildArch:      noarch
+Source:         soup-sharp-%{version}.tar.bz2
+
+%description
+HTTP library implementation in C
+
+This package provides Mono bindings for Libsoup.
+
+%prep
+%setup -q -n soup-sharp-%{version} -q
+
+%build
+./configure --prefix=/usr --libdir=/usr/lib --sysconfdir=/etc --mandir=/usr/share/man --infodir=/usr/share/info --localstatedir=/var
+make
+
+%install
+make install DESTDIR=$RPM_BUILD_ROOT
+
+%clean
+rm -rf "$RPM_BUILD_ROOT"
+
+%files
+%defattr(-, root, root)
+%doc AUTHORS COPYING INSTALL NEWS README
+%{_prefix}/lib/mono/gac/soup-sharp
+%{_prefix}/lib/mono/soup-sharp
+%{_prefix}/lib/monodoc/sources/soup-sharp-docs*
+%{_prefix}/lib/pkgconfig/soup-sharp-2.4.pc
+
+%changelog
+* Thu Mar 31 2011 shana@spoiledcat.net
+- Initial package
+
+
+  

@@ -1,4 +1,9 @@
 <?xml version="1.0"?>
 <metadata>
+	<attr path="/api/namespace/object[@name='Message']/property[@name='RequestBody']" name="type">gpointer</attr>
+	<attr path="/api/namespace/object[@name='Message']/property[@name='ResponseBody']" name="type">gpointer</attr>
+	<attr path="/api/namespace/object[@name='Message']/property[@name='RequestHeaders']" name="type">gpointer</attr>
+	<attr path="/api/namespace/object[@name='Message']/property[@name='ResponseHeaders']" name="type">gpointer</attr>
+	<attr path="/api/namespace/object[@name='Session']/property[@name='ProxyUri']" name="type">gpointer</attr>
 </metadata>
 

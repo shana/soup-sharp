@@ -28,8 +28,10 @@ EXTRA_DIST = $(RAW_API) $(sources) $(customs) $(METADATA) \
 
 all: generated-stamp $(ASSEMBLY)
 
+$(NATIVE_PACKAGE).gir:
+	ln -s /usr/share/gir-1.0/$(NATIVE_PACKAGE).gir
+
 $(RAW_API): $(srcdir)/$(NATIVE_PACKAGE).gir
-	cp /usr/share/gir-1.0/$(NATIVE_PACKAGE).gir .
 	xsltproc -o $(RAW_API) gir2gapi.xslt $(NATIVE_PACKAGE).gir
 
 $(API): $(srcdir)/$(RAW_API) $(srcdir)/$(METADATA)

@@ -8,6 +8,6 @@
 	<remove-node path="/api/namespace/object[@name='AuthDomain']/property[@name='AuthDomainFilter']" />
 	<remove-node path="/api/namespace/object[@name='AuthDomain']/method[@name='SetFilter']" />
 	<remove-node path="/api/namespace/object[@name='AuthDomain']/method[@name='SetGenericAuthCallback']" />
-	<remove-node path="/api/namespace/object[@name='Globals']/method[@name='XmlrpcExtractMethodResponse']" />
+	<remove-node path="/api/namespace/object[@name='Global']/method[@name='XmlrpcExtractMethodResponse']" />
 </metadata>
 

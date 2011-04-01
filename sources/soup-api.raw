@@ -19,7 +19,7 @@
       </constructor>
       <constructor cname="soup_address_new_any">
         <parameters>
-          <parameter name="family" type="int"/>
+          <parameter name="family" type="SoupAddressFamily"/>
           <parameter name="port" type="guint"/>
         </parameters>
       </constructor>
@@ -100,7 +100,7 @@
         <parameter name="data" type="gpointer"/>
       </parameters>
     </callback>
-    <enum name="AddressFamily" cname="SoupAddressFamily">
+    <enum name="AddressFamily" cname="SoupAddressFamily" gtype="soup_address_family_get_type" type="enum">
       <member cname="SOUP_ADDRESS_FAMILY_INVALID" name="Invalid"/>
       <member cname="SOUP_ADDRESS_FAMILY_IPV6" name="Ipv6"/>
       <member cname="SOUP_ADDRESS_FAMILY_IPV4" name="Ipv4"/>
@@ -460,7 +460,7 @@
       </method>
     </struct>
     <struct name="Connection" cname="SoupConnection"/>
-    <enum name="ConnectionState" cname="SoupConnectionState">
+    <enum name="ConnectionState" cname="SoupConnectionState" gtype="soup_connection_state_get_type" type="enum">
       <member cname="SOUP_CONNECTION_NEW" name="New"/>
       <member cname="SOUP_CONNECTION_CONNECTING" name="Connecting"/>
       <member cname="SOUP_CONNECTION_IDLE" name="Idle"/>
@@ -672,11 +672,11 @@
       <method name="SetAcceptPolicy" cname="soup_cookie_jar_set_accept_policy">
         <return-type type="void"/>
         <parameters>
-          <parameter name="policy" type="int"/>
+          <parameter name="policy" type="SoupCookieJarAcceptPolicy"/>
         </parameters>
       </method>
       <method name="GetAcceptPolicy" cname="soup_cookie_jar_get_accept_policy">
-        <return-type type="int"/>
+        <return-type type="SoupCookieJarAcceptPolicy"/>
       </method>
       <property name="AcceptPolicy" cname="accept-policy" type="SoupCookieJarAcceptPolicy" readable="true" writable="true"/>
       <property name="ReadOnly" cname="read-only" type="gboolean" readable="true" writable="true"/>
@@ -690,7 +690,7 @@
         </parameters>
       </signal>
     </object>
-    <enum name="CookieJarAcceptPolicy" cname="SoupCookieJarAcceptPolicy">
+    <enum name="CookieJarAcceptPolicy" cname="SoupCookieJarAcceptPolicy" gtype="soup_cookie_jar_accept_policy_get_type" type="enum">
       <member cname="SOUP_COOKIE_JAR_ACCEPT_ALWAYS" name="Always"/>
       <member cname="SOUP_COOKIE_JAR_ACCEPT_NEVER" name="Never"/>
       <member cname="SOUP_COOKIE_JAR_ACCEPT_NO_THIRD_PARTY" name="NoThirdParty"/>
@@ -745,7 +745,7 @@
       <method name="ToString" cname="soup_date_to_string">
         <return-type type="char*"/>
         <parameters>
-          <parameter name="format" type="int"/>
+          <parameter name="format" type="SoupDateFormat"/>
         </parameters>
       </method>
       <method name="ToTimeT" cname="soup_date_to_time_t">
@@ -791,7 +791,7 @@
         <return-type type="void"/>
       </method>
     </struct>
-    <enum name="DateFormat" cname="SoupDateFormat">
+    <enum name="DateFormat" cname="SoupDateFormat" gtype="soup_date_format_get_type" type="enum">
       <member cname="SOUP_DATE_HTTP" name="Http"/>
       <member cname="SOUP_DATE_COOKIE" name="Cookie"/>
       <member cname="SOUP_DATE_RFC2822" name="Rfc2822"/>
@@ -800,7 +800,7 @@
       <member cname="SOUP_DATE_ISO8601" name="Iso8601"/>
       <member cname="SOUP_DATE_ISO8601_XMLRPC" name="Iso8601Xmlrpc"/>
     </enum>
-    <enum name="Encoding" cname="SoupEncoding">
+    <enum name="Encoding" cname="SoupEncoding" gtype="soup_encoding_get_type" type="enum">
       <member cname="SOUP_ENCODING_UNRECOGNIZED" name="Unrecognized"/>
       <member cname="SOUP_ENCODING_NONE" name="None"/>
       <member cname="SOUP_ENCODING_CONTENT_LENGTH" name="ContentLength"/>
@@ -808,11 +808,11 @@
       <member cname="SOUP_ENCODING_CHUNKED" name="Chunked"/>
       <member cname="SOUP_ENCODING_BYTERANGES" name="Byteranges"/>
     </enum>
-    <enum name="HTTPVersion" cname="SoupHTTPVersion">
+    <enum name="HTTPVersion" cname="SoupHTTPVersion" gtype="soup_http_version_get_type" type="enum">
       <member cname="SOUP_HTTP_1_0" name="SOUPHTTP10"/>
       <member cname="SOUP_HTTP_1_1" name="SOUPHTTP11"/>
     </enum>
-    <enum name="KnownStatusCode" cname="SoupKnownStatusCode">
+    <enum name="KnownStatusCode" cname="SoupKnownStatusCode" gtype="soup_known_status_code_get_type" type="enum">
       <member cname="SOUP_STATUS_NONE" name="None"/>
       <member cname="SOUP_STATUS_CANCELLED" name="Cancelled"/>
       <member cname="SOUP_STATUS_TOO_MANY_REDIRECTS" name="TooManyRedirects"/>
@@ -882,7 +882,7 @@
       </method>
       <constructor cname="soup_logger_new">
         <parameters>
-          <parameter name="level" type="int"/>
+          <parameter name="level" type="SoupLoggerLogLevel"/>
           <parameter name="max_body_size" type="int"/>
         </parameters>
       </constructor>
@@ -925,14 +925,14 @@
       <field cname="parent" name="Parent" type="GObject"/>
     </object>
     <callback name="LoggerFilter" cname="SoupLoggerFilter">
-      <return-type type="int"/>
+      <return-type type="SoupLoggerLogLevel"/>
       <parameters>
         <parameter name="logger" type="SoupLogger*"/>
         <parameter name="msg" type="SoupMessage*"/>
         <parameter name="user_data" type="gpointer"/>
       </parameters>
     </callback>
-    <enum name="LoggerLogLevel" cname="SoupLoggerLogLevel">
+    <enum name="LoggerLogLevel" cname="SoupLoggerLogLevel" gtype="soup_logger_log_level_get_type" type="enum">
       <member cname="SOUP_LOGGER_LOG_NONE" name="None"/>
       <member cname="SOUP_LOGGER_LOG_MINIMAL" name="Minimal"/>
       <member cname="SOUP_LOGGER_LOG_HEADERS" name="Headers"/>
@@ -942,13 +942,13 @@
       <return-type type="void"/>
       <parameters>
         <parameter name="logger" type="SoupLogger*"/>
-        <parameter name="level" type="int"/>
+        <parameter name="level" type="SoupLoggerLogLevel"/>
         <parameter name="direction" type="char"/>
         <parameter name="data" type="const-char*"/>
         <parameter name="user_data" type="gpointer"/>
       </parameters>
     </callback>
-    <enum name="MemoryUse" cname="SoupMemoryUse">
+    <enum name="MemoryUse" cname="SoupMemoryUse" gtype="soup_memory_use_get_type" type="enum">
       <member cname="SOUP_MEMORY_STATIC" name="Static"/>
       <member cname="SOUP_MEMORY_TAKE" name="Take"/>
       <member cname="SOUP_MEMORY_COPY" name="Copy"/>
@@ -974,7 +974,7 @@
         <return-type type="void"/>
         <parameters>
           <parameter name="content_type" type="const-char*"/>
-          <parameter name="req_use" type="int"/>
+          <parameter name="req_use" type="SoupMemoryUse"/>
           <parameter name="req_body" type="const-char*"/>
           <parameter name="req_length" type="gsize"/>
         </parameters>
@@ -983,7 +983,7 @@
         <return-type type="void"/>
         <parameters>
           <parameter name="content_type" type="const-char*"/>
-          <parameter name="resp_use" type="int"/>
+          <parameter name="resp_use" type="SoupMemoryUse"/>
           <parameter name="resp_body" type="const-char*" array_len="4"/>
           <parameter name="resp_length" type="gsize"/>
         </parameters>
@@ -991,11 +991,11 @@
       <method name="SetHttpVersion" cname="soup_message_set_http_version">
         <return-type type="void"/>
         <parameters>
-          <parameter name="version" type="int"/>
+          <parameter name="version" type="SoupHTTPVersion"/>
         </parameters>
       </method>
       <method name="GetHttpVersion" cname="soup_message_get_http_version">
-        <return-type type="int"/>
+        <return-type type="SoupHTTPVersion"/>
       </method>
       <method name="IsKeepalive" cname="soup_message_is_keepalive">
         <return-type type="gboolean"/>
@@ -1195,7 +1195,7 @@
     <struct name="MessageHeaders" cname="SoupMessageHeaders">
       <constructor cname="soup_message_headers_new">
         <parameters>
-          <parameter name="type" type="int"/>
+          <parameter name="type" type="SoupMessageHeadersType"/>
         </parameters>
       </constructor>
       <method name="Free" cname="soup_message_headers_free">
@@ -1250,12 +1250,12 @@
         </parameters>
       </method>
       <method name="GetEncoding" cname="soup_message_headers_get_encoding">
-        <return-type type="int"/>
+        <return-type type="SoupEncoding"/>
       </method>
       <method name="SetEncoding" cname="soup_message_headers_set_encoding">
         <return-type type="void"/>
         <parameters>
-          <parameter name="encoding" type="int"/>
+          <parameter name="encoding" type="SoupEncoding"/>
         </parameters>
       </method>
       <method name="GetContentLength" cname="soup_message_headers_get_content_length">
@@ -1372,7 +1372,7 @@
         </parameters>
       </method>
     </struct>
-    <enum name="MessageHeadersType" cname="SoupMessageHeadersType">
+    <enum name="MessageHeadersType" cname="SoupMessageHeadersType" gtype="soup_message_headers_type_get_type" type="enum">
       <member cname="SOUP_MESSAGE_HEADERS_REQUEST" name="Request"/>
       <member cname="SOUP_MESSAGE_HEADERS_RESPONSE" name="Response"/>
       <member cname="SOUP_MESSAGE_HEADERS_MULTIPART" name="Multipart"/>
@@ -1459,7 +1459,7 @@
       <field cname="start" name="Start" type="goffset"/>
       <field cname="end" name="End" type="goffset"/>
     </struct>
-    <enum name="SSLError" cname="SoupSSLError">
+    <enum name="SSLError" cname="SoupSSLError" gtype="soup_ssl_error_get_type" type="enum">
       <member cname="SOUP_SSL_ERROR_HANDSHAKE_NEEDS_READ" name="HandshakeNeedsRead"/>
       <member cname="SOUP_SSL_ERROR_HANDSHAKE_NEEDS_WRITE" name="HandshakeNeedsWrite"/>
       <member cname="SOUP_SSL_ERROR_CERTIFICATE" name="Certificate"/>
@@ -1872,7 +1872,7 @@
         <return-type type="SoupAddress*"/>
       </method>
       <method name="Read" cname="soup_socket_read">
-        <return-type type="int"/>
+        <return-type type="SoupSocketIOStatus"/>
         <parameters>
           <parameter name="buffer" type="gpointer"/>
           <parameter name="len" type="gsize"/>
@@ -1881,7 +1881,7 @@
         </parameters>
       </method>
       <method name="ReadUntil" cname="soup_socket_read_until">
-        <return-type type="int"/>
+        <return-type type="SoupSocketIOStatus"/>
         <parameters>
           <parameter name="buffer" type="gpointer"/>
           <parameter name="len" type="gsize"/>
@@ -1893,7 +1893,7 @@
         </parameters>
       </method>
       <method name="Write" cname="soup_socket_write">
-        <return-type type="int"/>
+        <return-type type="SoupSocketIOStatus"/>
         <parameters>
           <parameter name="buffer" type="gconstpointer"/>
           <parameter name="len" type="gsize"/>
@@ -1946,7 +1946,7 @@
         <parameter name="user_data" type="gpointer"/>
       </parameters>
     </callback>
-    <enum name="SocketIOStatus" cname="SoupSocketIOStatus">
+    <enum name="SocketIOStatus" cname="SoupSocketIOStatus" gtype="soup_socket_io_status_get_type" type="enum">
       <member cname="SOUP_SOCKET_OK" name="Ok"/>
       <member cname="SOUP_SOCKET_WOULD_BLOCK" name="WouldBlock"/>
       <member cname="SOUP_SOCKET_EOF" name="Eof"/>
@@ -2082,11 +2082,11 @@
         <return-type type="SoupURI*"/>
       </method>
     </struct>
-    <enum name="XMLRPCError" cname="SoupXMLRPCError">
+    <enum name="XMLRPCError" cname="SoupXMLRPCError" gtype="soup_xmlrpc_error_get_type" type="enum">
       <member cname="SOUP_XMLRPC_ERROR_ARGUMENTS" name="Arguments"/>
       <member cname="SOUP_XMLRPC_ERROR_RETVAL" name="Retval"/>
     </enum>
-    <enum name="XMLRPCFault" cname="SoupXMLRPCFault">
+    <enum name="XMLRPCFault" cname="SoupXMLRPCFault" gtype="soup_xmlrpc_fault_get_type" type="enum">
       <member cname="SOUP_XMLRPC_FAULT_TRANSPORT_ERROR" name="TransportError"/>
       <member cname="SOUP_XMLRPC_FAULT_SYSTEM_ERROR" name="SystemError"/>
       <member cname="SOUP_XMLRPC_FAULT_APPLICATION_ERROR" name="ApplicationError"/>
@@ -2098,7 +2098,7 @@
       <member cname="SOUP_XMLRPC_FAULT_PARSE_ERROR_UNSUPPORTED_ENCODING" name="ParseErrorUnsupportedEncoding"/>
       <member cname="SOUP_XMLRPC_FAULT_PARSE_ERROR_INVALID_CHARACTER_FOR_ENCODING" name="ParseErrorInvalidCharacterForEncoding"/>
     </enum>
-    <object name="Globals" cname="SoupGlobals">
+    <object name="Global" cname="SoupGlobal" opaque="true">
       <method name="AddCompletion" cname="soup_add_completion" shared="true">
         <return-type type="GSource*"/>
         <parameters>

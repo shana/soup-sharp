@@ -1,9 +1,11 @@
 prefix=@prefix@
 exec_prefix=${prefix}
 libdir=@libdir@
+gapidir=${prefix}/share/gapi-2.0
 
 Name: @ASSEMBLY_TITLE@
 Description: @ASSEMBLY_DESCRIPTION@
 Version: @VERSION@
 Requires: gtk-sharp-2.0
+Cflags: -I:${gapidir}/soup-api.xml
 Libs: -r:${libdir}/mono/@ASSEMBLY_NAME@/@ASSEMBLY_NAME@.dll

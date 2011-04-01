@@ -1,6 +1,7 @@
-
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = $(ASSEMBLY_PC).pc
+gapidir = $(datadir)/gapi-2.0
+gapi_DATA = soup-api.xml
 
 RAW_API=$(ASSEMBLY_SHORTNAME)-api.raw
 API=$(ASSEMBLY_SHORTNAME)-api.xml

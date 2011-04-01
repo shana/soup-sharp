@@ -14,7 +14,7 @@ build_sources = AssemblyInfo.cs $(sources)
 customs = 
 #customs = App.custom Widget.custom Project.custom WidgetClass.custom
 
-CLEANFILES = $(ASSEMBLY_NAME).dll generated-stamp generated/*.cs $(API) $(RAW_API)
+CLEANFILES = $(ASSEMBLY_NAME).dll generated-stamp generated/*.cs $(API)
 
 DISTCLEANFILES= AssemblyInfo.cs $(ASSEMBLY_PC).pc $(ASSEMBLY_NAME).dll.config
 
@@ -31,8 +31,8 @@ all: generated-stamp $(ASSEMBLY)
 $(NATIVE_PACKAGE).gir:
 	ln -s /usr/share/gir-1.0/$(NATIVE_PACKAGE).gir
 
-$(RAW_API): $(srcdir)/$(NATIVE_PACKAGE).gir
-	xsltproc -o $(RAW_API) gir2gapi.xslt $(NATIVE_PACKAGE).gir
+api: $(srcdir)/$(NATIVE_PACKAGE).gir
+	xsltproc --output $(RAW_API) gir2gapi.xslt $(NATIVE_PACKAGE).gir
 
 $(API): $(srcdir)/$(RAW_API) $(srcdir)/$(METADATA)
 	cp $(srcdir)/$(RAW_API) $(API)

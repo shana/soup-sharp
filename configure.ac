@@ -37,35 +37,18 @@ fi
 
 dnl Check for Mono
 PKG_CHECK_MODULES(MONO_DEPENDENCY, mono >= 1.0, has_mono=true, has_mono=false)
-PKG_CHECK_MODULES(MONO_DEPENDENCY, mint >= 1.0, has_mint=true, has_mint=false)
 
 if test "x$has_mono" = "xtrue"; then
 	if test `uname -s` = "Darwin"; then
-		AC_PATH_PROG(RUNTIME, mono, no)
-		AC_PATH_PROG(CSC, mcs, no)
+		AC_PATH_PROG(RUNTIME, [mono], [no])
+		AC_PATH_PROG(CSC, [mcs], [no])
 		LIB_PREFIX=
 		LIB_SUFFIX=.dylib
 	else
-		AC_PATH_PROG(RUNTIME, mono, no)
-		AC_PATH_PROG(CSC, mcs, no)
+		AC_PATH_PROG(RUNTIME, [mono], [no])
+		AC_PATH_PROG(CSC, [dmcs], [no])
 		LIB_PREFIX=.so
 		LIB_SUFFIX=
-	fi
-else
-	if test "x$has_mint" = "xtrue"; then
-		AC_PATH_PROG(RUNTIME, mint, no)
-		AC_PATH_PROG(CSC, mcs, no)
-		LIB_PREFIX=.so
-		LIB_SUFFIX=
-	else
-		AC_PATH_PROG(CSC, csc.exe, no)
-		if test x$CSC = "xno"; then
-			AC_MSG_ERROR([You need to install either mono or .Net])
-		else
-			RUNTIME=
-			LIB_PREFIX=
-			LIB_SUFFIX=.dylib
-		fi
 	fi
 fi
 
